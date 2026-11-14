@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bazar d'Épervine — Catalogue</title>
+<meta name="description" content="Catalogue du Bazar d'Épervine : articles disponibles en ce moment et leurs prix.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2314120e'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='36' font-weight='700' text-anchor='middle' fill='%23cfae6a'%3EÉ%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--fond:#14120e;--carte:#1e1a14;--bord:#3b3226;--or:#cfae6a;--texte:#ece4d2;--doux:#a99f8b;--enchant:#8fb8e8;--dispo:#8cbf7a}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--fond);background-image:radial-gradient(ellipse at top,#2a2319 0%,var(--fond) 60%);background-attachment:fixed;color:var(--texte);font-family:"Crimson Text",Georgia,serif;font-size:18px;line-height:1.4;min-height:100vh}
+header{text-align:center;padding:48px 16px 20px}
+.sur{margin:0;font-family:Cinzel,serif;letter-spacing:.35em;text-transform:uppercase;font-size:.75rem;color:var(--or)}
+h1{margin:8px 0 6px;font-family:Cinzel,serif;font-weight:700;font-size:clamp(2rem,7vw,3.2rem);letter-spacing:.04em;color:#f3e7c9}
+.sous{margin:0;color:var(--doux);font-style:italic}
+header::after{content:"";display:block;width:160px;height:1px;margin:20px auto 0;background:linear-gradient(90deg,transparent,var(--or),transparent)}
+.outils{position:sticky;top:0;z-index:2;background:rgba(20,18,14,.94);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:12px 16px;border-bottom:1px solid var(--bord)}
+#recherche{display:block;width:100%;max-width:520px;margin:0 auto 10px;padding:10px 14px;border-radius:8px;border:1px solid var(--bord);background:var(--carte);color:var(--texte);font:inherit;font-size:17px}
+#recherche:focus{outline:2px solid var(--or);outline-offset:1px}
+.filtres{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;max-width:1100px;margin:0 auto}
+.filtre{font-family:Cinzel,serif;font-size:.72rem;letter-spacing:.06em;padding:6px 11px;border-radius:999px;border:1px solid var(--bord);background:transparent;color:var(--doux);cursor:pointer}
+.filtre:hover{color:var(--texte);border-color:var(--or)}
+.filtre.actif{background:var(--or);border-color:var(--or);color:#1b160e}
+main{max-width:1100px;margin:0 auto;padding:8px 16px 24px;min-height:50vh}
+.groupe{margin-top:26px}
+h2{font-family:Cinzel,serif;font-weight:500;font-size:1.15rem;letter-spacing:.06em;color:var(--or);margin:0 0 12px;padding-bottom:6px;border-bottom:1px solid var(--bord);display:flex;align-items:baseline;gap:10px}
+.nb{font-family:"Crimson Text",serif;font-size:.85rem;color:var(--doux)}
+.grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.carte{background:var(--carte);border:1px solid var(--bord);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.carte h3{margin:0;font-size:1.08rem;font-weight:600;line-height:1.25;overflow-wrap:anywhere}
+.enchant{margin:0;font-size:.92rem;color:var(--enchant)}
+.bas{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px;padding-top:6px}
+.dispo{font-size:.85rem;color:var(--dispo)}
+.dispo::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--dispo);margin-right:6px;vertical-align:middle}
+.prix{font-family:Cinzel,serif;font-weight:700;color:var(--or);white-space:nowrap}
+.prix small{font-family:"Crimson Text",serif;font-weight:400;font-size:.8rem;color:var(--doux)}
+.prix.demande{font-family:"Crimson Text",serif;font-weight:400;font-style:italic;font-size:.9rem;color:var(--doux)}
+.message{text-align:center;color:var(--doux);font-style:italic;margin:48px 0}
+.message button{margin-top:14px;font-family:Cinzel,serif;font-size:.8rem;letter-spacing:.06em;padding:8px 16px;border-radius:999px;border:1px solid var(--or);background:transparent;color:var(--or);cursor:pointer;font-style:normal}
+.fantome{height:92px;border-radius:10px;border:1px solid var(--bord);background:linear-gradient(90deg,#1c1813 0%,#262017 50%,#1c1813 100%);background-size:200% 100%;animation:lueur 1.4s ease-in-out infinite}
+@keyframes lueur{0%{background-position:100% 0}100%{background-position:-100% 0}}
+@media (prefers-reduced-motion:reduce){.fantome{animation:none}}
+.cache{display:none!important}
+footer{text-align:center;color:var(--doux);font-size:.85rem;padding:10px 16px 36px}
+@media (max-width:480px){
+  body{font-size:17px}
+  .filtres{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;scrollbar-width:none;padding-bottom:2px}
+  .filtres::-webkit-scrollbar{display:none}
+  .filtre{flex:0 0 auto}
+  .grille{grid-template-columns:1fr 1fr;gap:8px}
+  .carte{padding:10px}
+  .carte h3{font-size:1rem}
+  .bas{flex-direction:column;align-items:flex-start;gap:2px}
+}
+</style>
+</head>
+<body>
+<header>
+  <p class="sur">Catalogue</p>
+  <h1 id="titre">Bazar d'Épervine</h1>
+  <p class="sous" id="sous">Articles disponibles en ce moment</p>
+</header>
+
+<div class="outils">
+  <input id="recherche" type="search" placeholder="Chercher un article…" aria-label="Chercher un article" disabled>
+  <nav class="filtres" id="filtres" aria-label="Catégories"></nav>
+</div>
+
+<main id="contenu" aria-live="polite">
+  <div class="groupe"><div class="grille">
+    <div class="fantome"></div><div class="fantome"></div><div class="fantome"></div><div class="fantome"></div>
+    <div class="fantome"></div><div class="fantome"></div><div class="fantome"></div><div class="fantome"></div>
+  </div></div>
+</main>
+
+<footer>Liste lue en direct dans les registres du bazar. Stock et prix peuvent changer : demandez au comptoir.</footer>
+
+<script>
+// Adresse de la page Apps Script du catalogue (celle qui finit par /exec).
+var ADRESSE_CATALOGUE = "A_REMPLACER";
+
+var contenu = document.getElementById("contenu");
+var champ = document.getElementById("recherche");
+var filtres = document.getElementById("filtres");
+var categorieActive = "";
+
+function norm(s) {
+  return String(s).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
+}
+
+function prixTexte(n) {
+  var r = Math.round(n * 100) / 100;
+  var parties = (Number.isInteger(r) ? String(r) : r.toFixed(2)).split(".");
+  parties[0] = parties[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  return parties.join(",");
+}
+
+function element(balise, classe, texte) {
+  var e = document.createElement(balise);
+  if (classe) e.className = classe;
+  if (texte !== undefined) e.textContent = texte;
+  return e;
+}
+
+function message(texte, avecBouton) {
+  contenu.innerHTML = "";
+  var p = element("p", "message", texte);
+  if (avecBouton) {
+    p.appendChild(document.createElement("br"));
+    var b = element("button", "", "Réessayer");
+    b.addEventListener("click", charger);
+    p.appendChild(b);
+  }
+  contenu.appendChild(p);
+}
+
+function afficher(donnees) {
+  var monnaie = donnees.monnaie || "septims";
+  document.getElementById("sous").textContent = "Articles disponibles en ce moment · prix en " + monnaie;
+  contenu.innerHTML = "";
+  filtres.innerHTML = "";
+
+  var groupes = donnees.groupes || [];
+  if (!groupes.length) { message("Aucun article disponible pour le moment."); return; }
+
+  var tout = element("button", "filtre actif", "Tout");
+  tout.dataset.cat = "";
+  filtres.appendChild(tout);
+
+  groupes.forEach(function (g, gi) {
+    var bouton = element("button", "filtre", g.categorie);
+    bouton.dataset.cat = String(gi);
+    filtres.appendChild(bouton);
+
+    var section = element("section", "groupe");
+    section.dataset.cat = String(gi);
+    var h2 = element("h2", "", g.categorie + " ");
+    h2.appendChild(element("span", "nb", String(g.articles.length)));
+    section.appendChild(h2);
+
+    var grille = element("div", "grille");
+    g.articles.forEach(function (a) {
+      var carte = element("article", "carte");
+      carte.dataset.texte = norm(a.nom + " " + (a.enchantement || "") + " " + g.categorie);
+      carte.appendChild(element("h3", "", a.nom));
+      if (a.enchantement) carte.appendChild(element("p", "enchant", "Enchanté : " + a.enchantement));
+      var bas = element("div", "bas");
+      bas.appendChild(element("span", "dispo", "Disponible"));
+      if (a.prix === null || a.prix === undefined) {
+        bas.appendChild(element("span", "prix demande", "Prix sur demande"));
+      } else {
+        var prix = element("span", "prix", prixTexte(a.prix) + " ");
+        prix.appendChild(element("small", "", monnaie));
+        bas.appendChild(prix);
+      }
+      carte.appendChild(bas);
+      grille.appendChild(carte);
+    });
+    section.appendChild(grille);
+    contenu.appendChild(section);
+  });
+
+  var aucun = element("p", "message cache", "Aucun article ne correspond à ta recherche.");
+  aucun.id = "aucun";
+  contenu.appendChild(aucun);
+
+  filtres.querySelectorAll(".filtre").forEach(function (b) {
+    b.addEventListener("click", function () {
+      filtres.querySelectorAll(".filtre").forEach(function (x) { x.classList.remove("actif"); });
+      b.classList.add("actif");
+      categorieActive = b.dataset.cat;
+      appliquer();
+    });
+  });
+  champ.disabled = false;
+  appliquer();
+}
+
+function appliquer() {
+  var q = norm(champ.value);
+  var vus = 0;
+  contenu.querySelectorAll(".groupe").forEach(function (g) {
+    var n = 0;
+    var bonne = categorieActive === "" || g.dataset.cat === categorieActive;
+    g.querySelectorAll(".carte").forEach(function (c) {
+      var ok = bonne && (q === "" || c.dataset.texte.indexOf(q) >= 0);
+      c.classList.toggle("cache", !ok);
+      if (ok) n++;
+    });
+    g.classList.toggle("cache", n === 0);
+    vus += n;
+  });
+  var aucun = document.getElementById("aucun");
+  if (aucun) aucun.classList.toggle("cache", vus > 0);
+}
+
+function charger() {
+  fetch(ADRESSE_CATALOGUE + "?format=json")
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(afficher)
+    .catch(function () { message("Le catalogue est momentanément indisponible.", true); });
+}
+
+champ.addEventListener("input", appliquer);
+charger();
+</script>
+</body>
+</html>
