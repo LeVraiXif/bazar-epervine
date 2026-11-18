@@ -190,6 +190,16 @@ h2 {
 }
 .article .photo { aspect-ratio: 4 / 5; background: var(--bande); position: relative; }
 .article .photo img { width: 100%; height: 100%; object-fit: cover; cursor: zoom-in; }
+.article .photo .sexes {
+  position: absolute; left: 50%; bottom: 8px; transform: translateX(-50%); display: flex;
+  background: rgba(26, 20, 66, .78); border: 1px solid var(--violet-clair); border-radius: 999px; padding: 2px;
+}
+.article .photo .sexes button {
+  font-family: Metamorphous, serif; font-size: .78rem; padding: 4px 11px; border: 0; border-radius: 999px;
+  background: transparent; color: #d6d4fb; cursor: pointer;
+}
+.article .photo .sexes button:hover { color: #fff; }
+.article .photo .sexes button[aria-pressed="true"] { background: var(--violet-clair); color: var(--encre); }
 .article .photo .ornement { position: absolute; inset: 0; display: grid; place-items: center; color: rgba(187, 187, 247, .35); }
 .article .photo .ornement svg { width: 46%; height: auto; }
 .article .infos { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
@@ -488,17 +498,7 @@ function enTete(titre, sousTitre, grande) {
 
 function carteArticle(a, rubrique) {
   var carte = element("article", "article");
-  var cadre = element("div", "photo");
-  if (a.photo) {
-    var img = document.createElement("img");
-    img.src = a.photo; img.alt = a.nom; img.loading = "lazy"; img.referrerPolicy = "no-referrer";
-    img.addEventListener("error", function () { img.remove(); cadre.appendChild(ornement()); });
-    img.addEventListener("click", function () { agrandir(a.photo, a.nom); });
-    cadre.appendChild(img);
-  } else {
-    cadre.appendChild(ornement());
-  }
-  carte.appendChild(cadre);
+  carte.appendChild(cadrePhotos(a));
   var infos = element("div", "infos");
   infos.appendChild(element("h3", "", a.nom));
   if (rubrique) infos.appendChild(element("p", "rubrique", rubrique));
@@ -506,6 +506,53 @@ function carteArticle(a, rubrique) {
   carte.appendChild(infos);
   return carte;
 }
+// Photo de l'article. Un vêtement peut avoir deux photos (homme et femme) :
+// des boutons Homme / Femme permettent alors de passer de l'une à l'autre.
+function cadrePhotos(a) {
+  var cadre = element("div", "photo");
+  var photos = [];
+  if (a.photo) photos.push({ src: a.photo, sexe: "Homme" });
+  if (a.photoFemme) photos.push({ src: a.photoFemme, sexe: "Femme" });
+  if (!photos.length) { cadre.appendChild(ornement()); return cadre; }
+
+  var actuelle = photos[0];
+  var img = document.createElement("img");
+  img.alt = a.nom; img.loading = "lazy"; img.referrerPolicy = "no-referrer";
+  var sexes = null;
+  function montrer(photo) {
+    actuelle = photo;
+    img.src = photo.src;
+    img.alt = photos.length > 1 ? a.nom + " (" + photo.sexe.toLowerCase() + ")" : a.nom;
+    if (sexes) sexes.querySelectorAll("button").forEach(function (b) {
+      b.setAttribute("aria-pressed", b.textContent === photo.sexe);
+    });
+  }
+  // Image introuvable : on passe à l'autre photo, sinon on met l'épervier.
+  img.addEventListener("error", function () {
+    photos = photos.filter(function (p) { return p !== actuelle; });
+    if (sexes) { sexes.remove(); sexes = null; }
+    if (photos.length) montrer(photos[0]);
+    else { img.remove(); cadre.appendChild(ornement()); }
+  });
+  img.addEventListener("click", function () { agrandir(actuelle.src, img.alt); });
+  cadre.appendChild(img);
+
+  if (photos.length > 1) {
+    sexes = element("div", "sexes");
+    sexes.setAttribute("role", "group");
+    sexes.setAttribute("aria-label", "Voir la tenue sur");
+    photos.forEach(function (photo) {
+      var b = element("button", "", photo.sexe);
+      b.type = "button";
+      b.addEventListener("click", function () { montrer(photo); });
+      sexes.appendChild(b);
+    });
+    cadre.appendChild(sexes);
+  }
+  montrer(actuelle);
+  return cadre;
+}
+
 function ornement() {
   var o = element("div", "ornement");
   o.appendChild(svgUse("epervier"));
@@ -599,10 +646,10 @@ function pageAccueil() {
     var lien = element("a", "rayon");
     lien.href = "#/" + adresse(g.categorie);
     var vignette = element("div", "vignette");
-    var avecPhoto = g.articles.filter(function (a) { return a.photo; })[0];
+    var avecPhoto = g.articles.filter(function (a) { return a.photo || a.photoFemme; })[0];
     if (avecPhoto) {
       var img = document.createElement("img");
-      img.src = avecPhoto.photo; img.alt = ""; img.loading = "lazy"; img.referrerPolicy = "no-referrer";
+      img.src = avecPhoto.photo || avecPhoto.photoFemme; img.alt = ""; img.loading = "lazy"; img.referrerPolicy = "no-referrer";
       vignette.appendChild(img);
     } else {
       vignette.style.display = "grid"; vignette.style.placeItems = "center"; vignette.style.color = "rgba(187,187,247,.35)";
