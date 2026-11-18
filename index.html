@@ -178,18 +178,14 @@ h2 {
 .rayon:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(46, 36, 117, .2); border-color: var(--violet); }
 .rayon .vignette {
   aspect-ratio: 4 / 3; display: grid; place-items: center; overflow: hidden;
-  background:
-    radial-gradient(circle at 50% 50%, rgba(103, 93, 232, .16), transparent 62%),
-    var(--parchemin-fonce);
-  border-bottom: 1px solid var(--trait);
+  background: radial-gradient(circle at 50% 45%, #3b2c8e, #1a1442 75%);
 }
 .rayon .vignette svg {
-  width: auto; height: 62%; aspect-ratio: 1; padding: 6%; border-radius: 50%;
-  color: var(--violet-clair); background: radial-gradient(circle at 50% 40%, #3b2c8e, #1a1442);
-  box-shadow: 0 0 0 2px var(--violet-clair), 0 0 0 5px var(--trait), 0 0 22px rgba(103, 93, 232, .45);
-  transition: transform .2s ease, box-shadow .2s ease;
+  width: auto; height: 66%; aspect-ratio: 1;
+  color: var(--violet-clair); filter: drop-shadow(0 0 10px rgba(103, 93, 232, .7));
+  transition: transform .2s ease;
 }
-.rayon:hover .vignette svg { transform: scale(1.05); box-shadow: 0 0 0 2px var(--violet-clair), 0 0 0 5px var(--trait), 0 0 30px rgba(103, 93, 232, .65); }
+.rayon:hover .vignette svg { transform: scale(1.06); }
 .rayon .nom { font-family: Metamorphous, serif; font-size: 1.1rem; padding: 12px 14px 2px; }
 .rayon .nb { font-size: .92rem; color: var(--encre-douce); padding: 0 14px 12px; font-style: italic; }
 
