@@ -483,6 +483,7 @@ function enTete(titre, sousTitre, grande) {
   banniere.classList.toggle("petite", !grande);
   titreBanniere.textContent = titre;
   deviseBanniere.textContent = sousTitre;
+  deviseBanniere.hidden = !sousTitre;
 }
 
 function carteArticle(a, rubrique) {
@@ -547,8 +548,7 @@ function tarifEnchantements() {
 
 function pageEnchantements() {
   var liste = listeEnchantements();
-  var tarif = tarifEnchantements();
-  enTete(ATELIER.titre, pluriel(liste.length, "enchantement") + " proposé" + (liste.length > 1 ? "s" : "") + (tarif ? " · " + tarif : ""), false);
+  enTete(ATELIER.titre, "", false);
   contenu.textContent = "";
   var intro = element("div", "intro-atelier");
   ATELIER.paragraphes.forEach(function (p) { intro.appendChild(element("p", "", p)); });
