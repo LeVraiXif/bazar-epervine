@@ -194,7 +194,6 @@ h2 {
 .article .photo .ornement svg { width: 46%; height: auto; }
 .article .infos { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
 .article h3 { margin: 0; font-family: Metamorphous, serif; font-weight: 400; font-size: 1.08rem; line-height: 1.3; overflow-wrap: anywhere; }
-.article .enchant { margin: 0; font-size: .95rem; color: var(--enchant); font-style: italic; }
 .article .rubrique { margin: 0; font-size: .85rem; color: var(--encre-douce); }
 .article .prix {
   margin-top: auto; padding-top: 8px; font-family: Metamorphous, serif; font-size: 1.15rem; color: var(--or-fonce);
@@ -501,7 +500,6 @@ function carteArticle(a, rubrique) {
   carte.appendChild(cadre);
   var infos = element("div", "infos");
   infos.appendChild(element("h3", "", a.nom));
-  if (a.enchantement) infos.appendChild(element("p", "enchant", "Enchanté : " + a.enchantement));
   if (rubrique) infos.appendChild(element("p", "rubrique", rubrique));
   infos.appendChild(prixElement(a.prix));
   carte.appendChild(infos);
@@ -631,7 +629,7 @@ function pageRecherche(q) {
   var trouves = [];
   donnees.groupes.forEach(function (g) {
     g.articles.forEach(function (a) {
-      if (norm(a.nom + " " + a.enchantement + " " + g.categorie).indexOf(n) >= 0) trouves.push([a, g.categorie]);
+      if (norm(a.nom + " " + g.categorie).indexOf(n) >= 0) trouves.push([a, g.categorie]);
     });
   });
   var sorts = listeEnchantements().filter(function (e) { return norm(e.nom + " " + e.effet + " enchantement").indexOf(n) >= 0; });
