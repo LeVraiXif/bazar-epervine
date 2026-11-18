@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bazar d'Épervine</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta name="description" content="Catalogue du Bazar d'Épervine : articles disponibles en ce moment et leurs prix en septims.">
+<meta name="description" content="Catalogue du Bazar d'Épervine : articles disponibles en ce moment, enchantements proposés et leurs prix en septims.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Metamorphous&family=Alegreya:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -202,6 +202,46 @@ h2 {
 .article .prix small { font-family: Alegreya, serif; font-size: .85rem; color: var(--encre-douce); }
 .article .prix.demande { font-family: Alegreya, serif; font-style: italic; font-size: .95rem; color: var(--encre-douce); }
 
+/* Atelier d'enchantement */
+.atelier {
+  display: grid; grid-template-columns: auto 1fr auto; gap: 22px; align-items: center;
+  text-decoration: none; color: #ece9ff; margin: 0 0 48px; padding: 22px 26px;
+  background:
+    radial-gradient(ellipse at 15% 50%, rgba(187, 187, 247, .22), transparent 55%),
+    linear-gradient(120deg, #1a1442, #2e2475 60%, #3a2fa6);
+  border: 2px solid var(--violet-clair); outline: 2px solid var(--encre); border-radius: 2px;
+  box-shadow: 0 6px 20px rgba(46, 36, 117, .25);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.atelier:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(46, 36, 117, .35); }
+.atelier .rune { width: 64px; height: 64px; color: var(--violet-clair); }
+.atelier strong { display: block; font-family: var(--gothique); font-weight: 400; font-size: clamp(1.5rem, 4vw, 2rem); color: #fff; line-height: 1.15; }
+.atelier span { font-style: italic; color: #d6d4fb; }
+.atelier .tarif { font-family: Metamorphous, serif; font-size: 1.3rem; color: #fff; white-space: nowrap; text-align: right; font-style: normal; }
+.atelier .tarif small { display: block; font-family: Alegreya, serif; font-size: .85rem; color: #d6d4fb; font-style: italic; }
+
+.intro-atelier { max-width: 40em; margin: 0 auto 30px; text-align: center; font-size: 1.05rem; }
+.intro-atelier p { margin: 0 0 10px; }
+.intro-atelier .remarque { font-size: .95rem; color: var(--encre-douce); font-style: italic; }
+.enchantements { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+.enchantement {
+  position: relative; display: grid; grid-template-columns: 48px 1fr; gap: 4px 14px; align-items: start;
+  background: var(--parchemin-clair); border: 1px solid var(--trait); border-left: 4px solid var(--violet);
+  border-radius: 4px; padding: 16px 16px 14px;
+  box-shadow: 0 2px 0 rgba(46, 36, 117, .08);
+}
+.enchantement .rune {
+  grid-row: span 3; width: 48px; height: 48px; padding: 9px; border-radius: 50%;
+  color: var(--violet-clair); background: radial-gradient(circle at 50% 40%, #3b2c8e, #1a1442);
+  box-shadow: 0 0 0 2px var(--violet-clair), 0 0 14px rgba(103, 93, 232, .45);
+}
+.enchantement h3 { margin: 0; font-family: Metamorphous, serif; font-weight: 400; font-size: 1.1rem; line-height: 1.3; }
+.enchantement .effet { margin: 0; color: var(--enchant); font-style: italic; }
+.enchantement .prix { margin-top: 6px; font-family: Metamorphous, serif; font-size: 1.15rem; color: var(--or-fonce); }
+.enchantement .prix small { font-family: Alegreya, serif; font-size: .85rem; color: var(--encre-douce); }
+.enchantement .prix.demande { font-family: Alegreya, serif; font-style: italic; font-size: .95rem; color: var(--encre-douce); }
+.titre-resultats { font-family: Metamorphous, serif; font-size: 1.15rem; text-align: left; margin: 30px 0 14px; color: var(--violet-fonce); }
+
 .message { text-align: center; font-style: italic; color: var(--encre-douce); margin: 40px 0; }
 .message button {
   display: block; margin: 16px auto 0; font-family: Metamorphous, serif; font-size: .9rem;
@@ -248,8 +288,12 @@ footer {
   .article .infos { padding: 9px 10px 11px; }
   .article h3 { font-size: .98rem; }
   .article .prix { font-size: 1rem; }
+  .atelier { grid-template-columns: auto 1fr; gap: 6px 16px; padding: 18px; }
+  .atelier .rune { width: 48px; height: 48px; grid-row: span 2; }
+  .atelier .tarif { text-align: left; grid-column: 2; font-size: 1.1rem; }
+  .enchantements { grid-template-columns: 1fr; gap: 12px; }
 }
-@media (prefers-reduced-motion: reduce) { .fantome { animation: none; } .rayon { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .fantome { animation: none; } .rayon, .atelier { transition: none; } }
 </style>
 </head>
 <body>
@@ -274,6 +318,15 @@ footer {
         <path d="M96 92 L104 92 M95 102 L105 102 M96 112 L104 112" stroke-width="1.6" opacity=".8"/>
         <!-- serres -->
         <path d="M94 130 L88 138 M106 130 L112 138"/>
+      </g>
+    </symbol>
+    <symbol id="rune" viewBox="0 0 48 48">
+      <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="24" cy="24" r="20" stroke-width="1.2" opacity=".55"/>
+        <path d="M24 6 L28 20 L42 24 L28 28 L24 42 L20 28 L6 24 L20 20 Z" fill="currentColor" fill-opacity=".18"/>
+        <path d="M24 15 L24 33 M15 24 L33 24" stroke-width="1.2" opacity=".7"/>
+        <circle cx="24" cy="24" r="2.4" fill="currentColor"/>
+        <path d="M36 9 l1.4 3 3 1.4 -3 1.4 -1.4 3 -1.4 -3 -3 -1.4 3 -1.4 Z M11 33 l1 2 2 1 -2 1 -1 2 -1 -2 -2 -1 2 -1 Z" fill="currentColor" stroke-width="1"/>
       </g>
     </symbol>
     <symbol id="filet" viewBox="0 0 220 14">
@@ -347,6 +400,26 @@ var ACCUEIL = {
   ]
 };
 
+// Enchantements : service d'Aelindor Valarion, à part des comptes du bazar.
+// La liste et les prix ne sont tapés qu'ici : à modifier librement.
+var ATELIER = {
+  adresse: "enchantements",
+  titre: "Enchantements",
+  paragraphes: [
+    "Aelindor Valarion, enchanteur, propose ses services au bazar. Apportez votre pièce d'équipement, ou choisissez-en une parmi nos articles : il y fixe l'enchantement de votre choix.",
+    "Le prix indiqué est celui de l'enchantement seul, gemme spirituelle comprise."
+  ],
+  liste: [
+    { nom: "Fortifier la magie I", effet: "+20 Magie tant que porté", prix: 900 },
+    { nom: "Fortifier la vigueur I", effet: "+20 Vigueur tant que porté", prix: 900 },
+    { nom: "Régénération de magie I", effet: "La magie se régénère 40 % plus vite", prix: 900 },
+    { nom: "Régénération de vigueur I", effet: "La vigueur se régénère 20 % plus vite", prix: 900 },
+    { nom: "Régénération de santé I", effet: "La santé se régénère 10 % plus vite", prix: 900 },
+    { nom: "Fortifier la charge I", effet: "+25 Charge tant que porté", prix: 900 }
+  ],
+  remarque: "Armures et vêtements uniquement : les sacs et les bijoux ne peuvent pas être enchantés pour le moment."
+};
+
 var contenu = document.getElementById("contenu");
 var menu = document.getElementById("menu");
 var champ = document.getElementById("recherche");
@@ -381,7 +454,7 @@ function svgUse(id, classe) {
   var s = document.createElementNS(ns, "svg");
   s.setAttribute("aria-hidden", "true");
   if (classe) s.setAttribute("class", classe);
-  s.setAttribute("viewBox", id === "filet" ? "0 0 220 14" : "0 0 200 200");
+  s.setAttribute("viewBox", id === "filet" ? "0 0 220 14" : id === "rune" ? "0 0 48 48" : "0 0 200 200");
   var u = document.createElementNS(ns, "use");
   u.setAttribute("href", "#" + id);
   s.appendChild(u);
@@ -423,13 +496,7 @@ function carteArticle(a, rubrique) {
   infos.appendChild(element("h3", "", a.nom));
   if (a.enchantement) infos.appendChild(element("p", "enchant", "Enchanté : " + a.enchantement));
   if (rubrique) infos.appendChild(element("p", "rubrique", rubrique));
-  if (a.prix === null) {
-    infos.appendChild(element("div", "prix demande", "Prix sur demande"));
-  } else {
-    var prix = element("div", "prix", prixTexte(a.prix) + " ");
-    prix.appendChild(element("small", "", monnaie));
-    infos.appendChild(prix);
-  }
+  infos.appendChild(prixElement(a.prix));
   carte.appendChild(infos);
   return carte;
 }
@@ -437,6 +504,71 @@ function ornement() {
   var o = element("div", "ornement");
   o.appendChild(svgUse("epervier"));
   return o;
+}
+
+function listeEnchantements() { return ATELIER.liste; }
+
+function prixElement(prix) {
+  if (prix === null || prix === undefined) return element("div", "prix demande", "Prix sur demande");
+  var p = element("div", "prix", prixTexte(prix) + " ");
+  p.appendChild(element("small", "", monnaie));
+  return p;
+}
+
+function carteEnchantement(e) {
+  var carte = element("article", "enchantement");
+  carte.appendChild(svgUse("rune", "rune"));
+  carte.appendChild(element("h3", "", e.nom));
+  if (e.effet) carte.appendChild(element("p", "effet", e.effet));
+  carte.appendChild(prixElement(e.prix));
+  return carte;
+}
+
+function grilleEnchantements(liste) {
+  var grille = element("div", "enchantements");
+  liste.forEach(function (e) { grille.appendChild(carteEnchantement(e)); });
+  return grille;
+}
+
+// Prix affiché en tête : « 900 septims » si tous les enchantements ont le même prix,
+// « dès 900 septims » sinon.
+function tarifEnchantements() {
+  var prix = listeEnchantements().map(function (e) { return e.prix; }).filter(function (p) { return p !== null && p !== undefined; });
+  if (!prix.length) return "";
+  var mini = Math.min.apply(null, prix);
+  var unique = prix.every(function (p) { return p === mini; });
+  return (unique ? "" : "dès ") + prixTexte(mini) + " " + monnaie;
+}
+
+function pageEnchantements() {
+  var liste = listeEnchantements();
+  var tarif = tarifEnchantements();
+  enTete(ATELIER.titre, pluriel(liste.length, "enchantement") + " proposé" + (liste.length > 1 ? "s" : "") + (tarif ? " · " + tarif : ""), false);
+  contenu.textContent = "";
+  var intro = element("div", "intro-atelier");
+  ATELIER.paragraphes.forEach(function (p) { intro.appendChild(element("p", "", p)); });
+  if (ATELIER.remarque) intro.appendChild(element("p", "remarque", ATELIER.remarque));
+  contenu.appendChild(intro);
+  contenu.appendChild(svgUse("filet", "filet"));
+  contenu.appendChild(grilleEnchantements(liste));
+}
+
+function blocAtelier() {
+  var liste = listeEnchantements();
+  var lien = element("a", "atelier");
+  lien.href = "#/" + ATELIER.adresse;
+  lien.appendChild(svgUse("rune", "rune"));
+  var texte = element("div");
+  texte.appendChild(element("strong", "", "Atelier d'enchantement"));
+  texte.appendChild(element("span", "", pluriel(liste.length, "enchantement") + " pour vos armures et vêtements"));
+  lien.appendChild(texte);
+  var tarif = tarifEnchantements();
+  if (tarif) {
+    var t = element("div", "tarif", tarif);
+    t.appendChild(element("small", "", "par enchantement"));
+    lien.appendChild(t);
+  }
+  return lien;
 }
 
 function pageAccueil() {
@@ -452,6 +584,7 @@ function pageAccueil() {
   ACCUEIL.paragraphes.forEach(function (p) { texte.appendChild(element("p", "", p)); });
   pres.appendChild(texte);
   contenu.appendChild(pres);
+  if (listeEnchantements().length) contenu.appendChild(blocAtelier());
 
   contenu.appendChild(element("h2", "", "Nos rayons"));
   contenu.appendChild(svgUse("filet", "filet"));
@@ -494,12 +627,21 @@ function pageRecherche(q) {
       if (norm(a.nom + " " + a.enchantement + " " + g.categorie).indexOf(n) >= 0) trouves.push([a, g.categorie]);
     });
   });
-  enTete("Recherche", trouves.length ? pluriel(trouves.length, "article") + " pour « " + q.trim() + " »" : "« " + q.trim() + " »", false);
+  var sorts = listeEnchantements().filter(function (e) { return norm(e.nom + " " + e.effet + " enchantement").indexOf(n) >= 0; });
+  var total = trouves.length + sorts.length;
+  enTete("Recherche", total ? pluriel(total, "résultat") + " pour « " + q.trim() + " »" : "« " + q.trim() + " »", false);
   contenu.textContent = "";
-  if (!trouves.length) { message("Aucun article ne correspond à votre recherche."); return; }
-  var grille = element("div", "articles");
-  trouves.forEach(function (t) { grille.appendChild(carteArticle(t[0], t[1])); });
-  contenu.appendChild(grille);
+  if (!total) { message("Aucun article ne correspond à votre recherche."); return; }
+  if (trouves.length) {
+    if (sorts.length) contenu.appendChild(element("h2", "titre-resultats", "Articles"));
+    var grille = element("div", "articles");
+    trouves.forEach(function (t) { grille.appendChild(carteArticle(t[0], t[1])); });
+    contenu.appendChild(grille);
+  }
+  if (sorts.length) {
+    contenu.appendChild(element("h2", "titre-resultats", "Enchantements"));
+    contenu.appendChild(grilleEnchantements(sorts));
+  }
 }
 
 function construireMenu() {
@@ -511,6 +653,11 @@ function construireMenu() {
     a.href = "#/" + adresse(g.categorie); a.dataset.page = adresse(g.categorie);
     menu.appendChild(a);
   });
+  if (listeEnchantements().length) {
+    var e = element("a", "", ATELIER.titre);
+    e.href = "#/" + ATELIER.adresse; e.dataset.page = ATELIER.adresse;
+    menu.appendChild(e);
+  }
 }
 
 function afficherPage() {
@@ -521,7 +668,9 @@ function afficherPage() {
     pageRecherche(q);
   } else {
     var g = donnees.groupes.filter(function (x) { return adresse(x.categorie) === page; })[0];
-    if (g) pageRayon(g); else { page = ""; pageAccueil(); }
+    if (g) pageRayon(g);
+    else if (page === ATELIER.adresse && listeEnchantements().length) pageEnchantements();
+    else { page = ""; pageAccueil(); }
   }
   menu.querySelectorAll("a").forEach(function (a) {
     var actif = !q && a.dataset.page === page;
