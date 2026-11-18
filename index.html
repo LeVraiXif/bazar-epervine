@@ -8,30 +8,32 @@
 <meta name="description" content="Catalogue du Bazar d'Épervine : articles disponibles en ce moment et leurs prix en septims.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Metamorphous&family=Alegreya:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Metamorphous&family=Alegreya:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
-  --parchemin: #d7cba9;
-  --parchemin-clair: #e4dabd;
-  --parchemin-fonce: #c5b68e;
-  --encre: #1f1b14;
-  --encre-douce: #4a4031;
-  --brun: #5a4a32;
-  --bande: #5b5640;
-  --nuit: #1d1a15;
-  --or: #ffd966;
-  --or-fonce: #9a7428;
-  --enchant: #2f5e8c;
-  --trait: rgba(60, 45, 25, .28);
+  /* Couleurs de la bannière d'Épervine : violet clair, violet, violet foncé, noir, sur fond crème. */
+  --parchemin: #fff3e2;
+  --parchemin-clair: #fffaf3;
+  --parchemin-fonce: #efe0c8;
+  --encre: #111014;
+  --encre-douce: #4a4458;
+  --brun: #2e2475;
+  --bande: #2e2475;
+  --nuit: #0f0d14;
+  --or: #bbbbf7;
+  --or-fonce: #3a2f9e;
+  --violet: #675de8;
+  --violet-clair: #bbbbf7;
+  --violet-fonce: #2e2475;
+  --enchant: #5146c9;
+  --trait: rgba(46, 36, 117, .22);
+  --gothique: UnifrakturMaguntia, "Old English Text MT", serif;
 }
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; scroll-padding-top: 64px; }
 body {
   margin: 0;
   background: var(--parchemin);
-  background-image:
-    radial-gradient(ellipse at 20% 0%, rgba(255,255,255,.18), transparent 55%),
-    radial-gradient(ellipse at 80% 100%, rgba(120,90,40,.12), transparent 60%);
   color: var(--encre);
   font-family: Alegreya, Georgia, serif;
   font-size: 18px;
@@ -48,13 +50,13 @@ img { display: block; max-width: 100%; }
   position: sticky; top: 0; z-index: 10;
   display: flex; align-items: center; gap: 18px;
   padding: 0 20px; height: 56px;
-  background: rgba(29, 26, 21, .92);
+  background: rgba(15, 13, 20, .94);
   backdrop-filter: blur(6px);
-  border-bottom: 1px solid rgba(255, 217, 102, .18);
+  border-bottom: 1px solid rgba(187, 187, 247, .18);
 }
 .marque {
-  font-family: Metamorphous, serif; color: #f4ecd8; text-decoration: none;
-  font-size: 1.05rem; white-space: nowrap; flex: 0 0 auto;
+  font-family: var(--gothique); color: var(--violet-clair); text-decoration: none;
+  font-size: 1.35rem; white-space: nowrap; flex: 0 0 auto;
 }
 .menu {
   display: flex; gap: 4px; margin-left: auto; overflow-x: auto;
@@ -66,7 +68,7 @@ img { display: block; max-width: 100%; }
   text-decoration: none; white-space: nowrap; padding: 6px 10px; border-radius: 4px;
 }
 .menu a:hover { color: #fff; }
-.menu a.actif { color: #fff; font-weight: 700; text-shadow: 0 0 1px #fff; }
+.menu a.actif { color: #fff; background: var(--violet-fonce); }
 .loupe {
   flex: 0 0 auto; background: none; border: 0; color: #d9d1bd; cursor: pointer;
   width: 36px; height: 36px; display: grid; place-items: center; border-radius: 50%;
@@ -74,40 +76,42 @@ img { display: block; max-width: 100%; }
 .loupe:hover { color: #fff; background: rgba(255,255,255,.08); }
 .recherche-zone {
   display: none; position: sticky; top: 56px; z-index: 9;
-  background: rgba(29, 26, 21, .95); padding: 10px 20px 14px;
+  background: rgba(15, 13, 20, .96); padding: 10px 20px 14px;
 }
 .recherche-zone.ouverte { display: block; }
 #recherche {
   display: block; width: 100%; max-width: 560px; margin: 0 auto;
-  padding: 10px 14px; border-radius: 6px; border: 1px solid rgba(255,217,102,.35);
-  background: #2a261f; color: #f4ecd8; font: inherit; font-size: 17px;
+  padding: 10px 14px; border-radius: 6px; border: 1px solid rgba(187,187,247,.35);
+  background: #1c1826; color: #f4ecd8; font: inherit; font-size: 17px;
 }
 #recherche:focus { outline: 2px solid var(--or); outline-offset: 1px; }
 
-/* Bannière */
-.banniere {
-  position: relative; overflow: hidden; text-align: center;
-  background: #3a3226;
-  color: var(--or);
+/* Bannière : cadre violet clair, fond violet, titre gothique noir (modèle demandé). */
+.banniere { padding: 28px 20px 0; }
+.banniere .cadre {
+  max-width: 1080px; margin: 0 auto; background: var(--violet-clair);
+  border: 2px solid var(--encre); padding: clamp(12px, 2.6vw, 26px);
+  box-shadow: 0 6px 18px rgba(46, 36, 117, .18);
 }
-.banniere svg.decor { position: absolute; inset: 0; width: 100%; height: 100%; }
-.banniere .contenu { position: relative; padding: 70px 20px 78px; }
-.banniere.petite .contenu { padding: 34px 20px 40px; }
+.banniere .contenu {
+  background: var(--violet); color: var(--encre); text-align: center;
+  padding: 44px 20px 48px; border: 1px solid rgba(17, 16, 20, .35);
+}
+.banniere.petite .contenu { padding: 22px 16px 26px; }
 .banniere h1 {
-  margin: 0; font-family: Metamorphous, serif; font-weight: 400;
-  font-size: clamp(2.3rem, 7vw, 4.6rem); line-height: 1.1;
-  text-shadow: 0 2px 0 rgba(0,0,0,.55), 0 0 30px rgba(0,0,0,.6);
+  margin: 0; font-family: var(--gothique); font-weight: 400;
+  font-size: clamp(2.4rem, 8vw, 5rem); line-height: 1.1; letter-spacing: .02em;
 }
-.banniere.petite h1 { font-size: clamp(1.8rem, 5vw, 3rem); }
+.banniere.petite h1 { font-size: clamp(1.9rem, 5.5vw, 3.2rem); }
 .banniere .devise {
-  margin: 10px 0 0; font-family: Metamorphous, serif; font-size: clamp(.95rem, 2.4vw, 1.2rem);
-  color: #f1e6c8; text-shadow: 0 1px 6px rgba(0,0,0,.8);
+  margin: 10px 0 0; font-family: Alegreya, Georgia, serif; font-style: italic;
+  font-size: clamp(1rem, 2.4vw, 1.25rem); color: var(--encre);
 }
 
 main { flex: 1; width: 100%; max-width: 1080px; margin: 0 auto; padding: 36px 20px 40px; }
 h2 {
-  font-family: Metamorphous, serif; font-weight: 400; color: var(--encre);
-  font-size: clamp(1.5rem, 4vw, 2.1rem); line-height: 1.2; margin: 0 0 16px; text-align: center;
+  font-family: var(--gothique); font-weight: 400; color: var(--encre);
+  font-size: clamp(1.8rem, 4.6vw, 2.5rem); line-height: 1.2; margin: 0 0 16px; text-align: center;
 }
 .filet {
   width: 220px; height: 14px; margin: 0 auto 28px; display: block; color: var(--brun);
@@ -119,7 +123,7 @@ h2 {
 }
 .presentation .blason {
   background: var(--nuit); border-radius: 4px; padding: 24px; display: grid; place-items: center;
-  box-shadow: 0 6px 20px rgba(40, 28, 10, .25); aspect-ratio: 4 / 3;
+  box-shadow: 0 6px 20px rgba(46, 36, 117, .25); aspect-ratio: 4 / 3;
 }
 .presentation .blason svg { width: 70%; height: auto; }
 .presentation .texte { text-align: center; }
@@ -133,7 +137,7 @@ h2 {
   background: var(--parchemin-clair); border: 1px solid var(--trait); border-radius: 4px; overflow: hidden;
   transition: transform .15s ease, box-shadow .15s ease;
 }
-.rayon:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(60, 40, 10, .2); }
+.rayon:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(46, 36, 117, .2); border-color: var(--violet); }
 .rayon .vignette { aspect-ratio: 4 / 3; background: var(--bande); }
 .rayon .vignette img { width: 100%; height: 100%; object-fit: cover; }
 .rayon .nom { font-family: Metamorphous, serif; font-size: 1.1rem; padding: 12px 14px 2px; }
@@ -144,11 +148,11 @@ h2 {
 .article {
   display: flex; flex-direction: column; background: var(--parchemin-clair);
   border: 1px solid var(--trait); border-radius: 4px; overflow: hidden;
-  box-shadow: 0 2px 0 rgba(90, 70, 40, .08);
+  box-shadow: 0 2px 0 rgba(46, 36, 117, .08);
 }
 .article .photo { aspect-ratio: 4 / 5; background: var(--bande); position: relative; }
 .article .photo img { width: 100%; height: 100%; object-fit: cover; cursor: zoom-in; }
-.article .photo .ornement { position: absolute; inset: 0; display: grid; place-items: center; color: rgba(255, 217, 102, .35); }
+.article .photo .ornement { position: absolute; inset: 0; display: grid; place-items: center; color: rgba(187, 187, 247, .35); }
 .article .photo .ornement svg { width: 46%; height: auto; }
 .article .infos { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
 .article h3 { margin: 0; font-family: Metamorphous, serif; font-weight: 400; font-size: 1.08rem; line-height: 1.3; overflow-wrap: anywhere; }
@@ -166,18 +170,18 @@ h2 {
   padding: 8px 18px; border-radius: 999px; border: 1px solid var(--brun); background: transparent;
   color: var(--encre); cursor: pointer;
 }
-.message button:hover { background: var(--parchemin-fonce); }
+.message button:hover { background: var(--violet-clair); }
 .fantome { background: var(--parchemin-fonce); border-radius: 4px; aspect-ratio: 4 / 5; animation: lueur 1.4s ease-in-out infinite; }
 @keyframes lueur { 50% { opacity: .55; } }
 
 footer {
-  text-align: center; font-size: .9rem; color: #cfc6b0; background: var(--nuit);
+  text-align: center; font-size: .9rem; color: #cfc8e0; background: var(--nuit);
   padding: 22px 20px; font-style: italic;
 }
 
 /* Agrandissement d'une photo */
 .loupe-photo {
-  position: fixed; inset: 0; z-index: 20; background: rgba(10, 8, 5, .88);
+  position: fixed; inset: 0; z-index: 20; background: rgba(10, 8, 16, .9);
   display: none; place-items: center; padding: 20px; cursor: zoom-out;
 }
 .loupe-photo.ouverte { display: grid; }
@@ -251,47 +255,11 @@ footer {
 </div>
 
 <section class="banniere" id="banniere">
-  <svg class="decor" viewBox="0 0 1600 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-    <defs>
-      <radialGradient id="halo" cx="50%" cy="45%" r="65%">
-        <stop offset="0" stop-color="#5e5140"/><stop offset=".6" stop-color="#3b3327"/><stop offset="1" stop-color="#211d17"/>
-      </radialGradient>
-      <pattern id="grain" width="6" height="6" patternUnits="userSpaceOnUse">
-        <circle cx="1" cy="1" r=".6" fill="#000" opacity=".18"/><circle cx="4" cy="4" r=".5" fill="#fff" opacity=".05"/>
-      </pattern>
-    </defs>
-    <rect width="1600" height="400" fill="url(#halo)"/>
-    <rect width="1600" height="400" fill="url(#grain)"/>
-    <g fill="none" stroke="#c9b78f" stroke-linecap="round" stroke-linejoin="round" opacity=".22">
-      <!-- grand épervier en filigrane au centre -->
-      <use href="#epervier" x="560" y="-80" width="480" height="480" style="color:#c9b78f"/>
-      <!-- rinceaux à gauche -->
-      <g stroke-width="2.4">
-        <path d="M40 330 C140 250 200 300 260 230 C320 160 280 90 360 70 C420 56 460 100 440 140 C424 172 380 168 372 140"/>
-        <path d="M120 370 C220 330 300 360 380 300 C450 248 440 190 500 170"/>
-        <path d="M260 230 C230 200 190 206 176 232 C164 256 186 276 206 266"/>
-        <path d="M60 120 C110 100 150 130 140 170 C132 200 96 196 92 176"/>
-        <path d="M0 210 C60 190 90 230 160 200"/>
-      </g>
-      <!-- rinceaux à droite (miroir) -->
-      <g stroke-width="2.4" transform="translate(1600 0) scale(-1 1)">
-        <path d="M40 330 C140 250 200 300 260 230 C320 160 280 90 360 70 C420 56 460 100 440 140 C424 172 380 168 372 140"/>
-        <path d="M120 370 C220 330 300 360 380 300 C450 248 440 190 500 170"/>
-        <path d="M260 230 C230 200 190 206 176 232 C164 256 186 276 206 266"/>
-        <path d="M60 120 C110 100 150 130 140 170 C132 200 96 196 92 176"/>
-        <path d="M0 210 C60 190 90 230 160 200"/>
-      </g>
-      <!-- balance du marchand à gauche, bourse à droite -->
-      <g stroke-width="2.2">
-        <path d="M250 300 V180 M200 196 H300 M200 196 L180 240 H220 Z M300 196 L280 240 H320 Z M230 300 H270"/>
-        <path d="M1350 250 C1320 250 1310 300 1340 312 H1400 C1430 300 1420 250 1390 250 Z M1352 250 L1340 230 H1400 L1388 250 M1370 230 V222"/>
-        <circle cx="1310" cy="318" r="10"/><circle cx="1290" cy="322" r="8"/><circle cx="1440" cy="320" r="9"/>
-      </g>
-    </g>
-  </svg>
-  <div class="contenu">
-    <h1 id="titre-banniere">Bazar d'Épervine</h1>
-    <p class="devise" id="devise-banniere">Catalogue des articles disponibles</p>
+  <div class="cadre">
+    <div class="contenu">
+      <h1 id="titre-banniere">Bazar d'Épervine</h1>
+      <p class="devise" id="devise-banniere">Catalogue des articles disponibles</p>
+    </div>
   </div>
 </section>
 
@@ -419,7 +387,7 @@ function pageAccueil() {
 
   var pres = element("section", "presentation");
   var blason = element("div", "blason");
-  var s = svgUse("epervier"); s.style.color = "#c9a64e"; blason.appendChild(s);
+  var s = svgUse("epervier"); s.style.color = "#bbbbf7"; blason.appendChild(s);
   pres.appendChild(blason);
   var texte = element("div", "texte");
   texte.appendChild(element("h2", "", ACCUEIL.titre));
@@ -441,7 +409,7 @@ function pageAccueil() {
       img.src = avecPhoto.photo; img.alt = ""; img.loading = "lazy"; img.referrerPolicy = "no-referrer";
       vignette.appendChild(img);
     } else {
-      vignette.style.display = "grid"; vignette.style.placeItems = "center"; vignette.style.color = "rgba(255,217,102,.35)";
+      vignette.style.display = "grid"; vignette.style.placeItems = "center"; vignette.style.color = "rgba(187,187,247,.35)";
       var e = svgUse("epervier"); e.style.width = "34%"; vignette.appendChild(e);
     }
     lien.appendChild(vignette);
