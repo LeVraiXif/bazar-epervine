@@ -821,6 +821,12 @@ function charger() {
   fetch(ADRESSE_CATALOGUE + "?format=json")
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(function (d) {
+      // On n'affiche que les articles qui ont au moins une photo,
+      // et les rayons qui en contiennent encore.
+      d.groupes = (d.groupes || []).map(function (g) {
+        g.articles = g.articles.filter(function (a) { return a.photo || a.photoFemme; });
+        return g;
+      }).filter(function (g) { return g.articles.length; });
       donnees = d;
       if (d.monnaie) monnaie = d.monnaie;
       construireMenu();
